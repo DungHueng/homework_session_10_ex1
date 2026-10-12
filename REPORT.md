@@ -1,8 +1,7 @@
-\# BÁO CÁO KỸ THUẬT: PHÂN TÍCH KIẾN TRÚC CONTAINER VS VIRTUAL MACHINE
+# BÁO CÁO KỸ THUẬT: PHÂN TÍCH KIẾN TRÚC CONTAINER VS VIRTUAL MACHINE
 
 
-
-\## 1. Tổng quan
+## 1. Tổng quan
 
 
 
@@ -18,7 +17,7 @@ Doanh nghiệp có thể chuyển từ mô hình triển khai VPS truyền thố
 
 
 
-\## 2. So sánh kiến trúc VM và Container
+## 2. So sánh kiến trúc VM và Container
 
 
 
@@ -42,11 +41,11 @@ Nhìn chung, VM phù hợp với các trường hợp cần chạy nhiều hệ 
 
 
 
-\## 3. Cơ chế cô lập và quản lý tài nguyên của Linux Container
+## 3. Cơ chế cô lập và quản lý tài nguyên của Linux Container
 
 
 
-\### 3.1. Namespaces – Cô lập không gian hệ thống
+### 3.1. Namespaces – Cô lập không gian hệ thống
 
 
 
@@ -58,17 +57,17 @@ Các loại namespaces quan trọng gồm:
 
 
 
-\- \*\*PID Namespace:\*\* Cô lập không gian Process ID. Tiến trình trong container có thể nhìn thấy hệ thống tiến trình riêng, trong khi kernel vẫn quản lý chúng trên máy chủ.
+- **PID Namespace:** Cô lập không gian Process ID. Tiến trình trong container có thể nhìn thấy hệ thống tiến trình riêng, trong khi kernel vẫn quản lý chúng trên máy chủ.
 
-\- \*\*Network Namespace:\*\* Cung cấp không gian mạng riêng, bao gồm giao diện mạng, bảng định tuyến và các quy tắc mạng tương ứng. Docker có thể kết nối các namespace qua virtual Ethernet và bridge.
+- **Network Namespace:** Cung cấp không gian mạng riêng, bao gồm giao diện mạng, bảng định tuyến và các quy tắc mạng tương ứng. Docker có thể kết nối các namespace qua virtual Ethernet và bridge.
 
-\- \*\*Mount Namespace:\*\* Cô lập góc nhìn về các điểm gắn kết hệ thống tệp (mount points), giúp container có cấu trúc hệ thống tệp riêng.
+- **Mount Namespace:** Cô lập góc nhìn về các điểm gắn kết hệ thống tệp (mount points), giúp container có cấu trúc hệ thống tệp riêng.
 
-\- \*\*UTS Namespace:\*\* Cho phép cô lập hostname và domain name.
+- **UTS Namespace:** Cho phép cô lập hostname và domain name.
 
-\- \*\*IPC Namespace:\*\* Cô lập một số cơ chế giao tiếp liên tiến trình.
+- **IPC Namespace:** Cô lập một số cơ chế giao tiếp liên tiến trình.
 
-\- \*\*User Namespace:\*\* Có thể ánh xạ UID/GID giữa bên trong container và máy chủ nhằm hỗ trợ giảm đặc quyền.
+- **User Namespace:** Có thể ánh xạ UID/GID giữa bên trong container và máy chủ nhằm hỗ trợ giảm đặc quyền.
 
 
 
@@ -76,7 +75,7 @@ Namespaces giúp container có môi trường vận hành riêng, nhưng không 
 
 
 
-\### 3.2. Control Groups (cgroups) – Quản lý tài nguyên
+### 3.2. Control Groups (cgroups) – Quản lý tài nguyên
 
 
 
@@ -88,11 +87,11 @@ Các chức năng tiêu biểu gồm:
 
 
 
-\- \*\*CPU:\*\* Thiết lập giới hạn hoặc tỷ lệ sử dụng CPU, giúp hạn chế một container chiếm quá nhiều năng lực xử lý.
+- **CPU:** Thiết lập giới hạn hoặc tỷ lệ sử dụng CPU, giúp hạn chế một container chiếm quá nhiều năng lực xử lý.
 
-\- \*\*RAM:\*\* Đặt giới hạn bộ nhớ cho nhóm tiến trình. Khi vượt giới hạn, hệ thống có thể áp dụng các cơ chế xử lý áp lực bộ nhớ, bao gồm OOM kill tùy cấu hình.
+- **RAM:** Đặt giới hạn bộ nhớ cho nhóm tiến trình. Khi vượt giới hạn, hệ thống có thể áp dụng các cơ chế xử lý áp lực bộ nhớ, bao gồm OOM kill tùy cấu hình.
 
-\- \*\*Theo dõi tài nguyên:\*\* Ghi nhận mức sử dụng tài nguyên của các nhóm tiến trình để hỗ trợ giám sát và quản trị.
+- **Theo dõi tài nguyên:** Ghi nhận mức sử dụng tài nguyên của các nhóm tiến trình để hỗ trợ giám sát và quản trị.
 
 
 
@@ -100,7 +99,7 @@ Namespaces và cgroups có vai trò khác nhau nhưng bổ trợ cho nhau: names
 
 
 
-\## 4. Kết quả kiểm tra Docker
+## 4. Kết quả kiểm tra Docker
 
 
 
@@ -138,5 +137,4 @@ docker info | grep -i cgroup
 
 
 
-\*\*Nhận xét:\*\* Lệnh `docker version` cung cấp thông tin phiên bản Docker Client và Docker Server. Lệnh `docker info` cung cấp thông tin tổng quan về Docker Engine, bao gồm cấu hình cgroups và số lượng container, image hiện có.
-
+**Nhận xét:** Lệnh `docker version` cung cấp thông tin phiên bản Docker Client và Docker Server. Lệnh `docker info` cung cấp thông tin tổng quan về Docker Engine, bao gồm cấu hình cgroups và số lượng container, image hiện có.
